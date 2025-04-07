@@ -56,15 +56,15 @@ public class BankLoginPersonalAccountTest {
         verificationPage.verifyErrorNotificationVisiblity("Ошибка! Неверно указан код! Попробуйте ещё раз.");
     }
 
-//    @Test
-//    @DisplayName("Должны получить уведомление о блокировке аккаунта пользователя после трёх попыток неверного ввода пароля")
-//    void shouldLockSystemAfterThreeAttemptsEnterInvalidPassword() {
-//        var authInfo = DataHelper.generateRandomUser();
-//        for (int i = 0; i < 3; i++) {
-//            loginPage.validLogin(authInfo);
-//        }
-//        assertAll(() -> loginPage.verifyErrorNotificationVisiblity("Аккаунт заблокирован после трех неудачных попыток входа," +
-//                        "Вам следует обратитесь в офис Банка"),
-//                () -> loginPage.checkButtonUnavailability());
-//    }
+    @Test
+    @DisplayName("Должны получить уведомление о блокировке аккаунта пользователя после трёх попыток неверного ввода пароля")
+    void shouldLockSystemAfterThreeAttemptsEnterInvalidPassword() {
+        var authInfo = DataHelper.generateRandomUser();
+        for (int i = 0; i < 3; i++) {
+            loginPage.invalidLogin(authInfo);
+        }
+        assertAll(() -> loginPage.verifyErrorNotificationVisiblity("Аккаунт заблокирован после трех неудачных попыток входа," +
+                        "Вам следует обратитесь в офис Банка"),
+                () -> loginPage.checkButtonUnavailability());
+    }
 }
