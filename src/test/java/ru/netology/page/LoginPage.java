@@ -4,8 +4,6 @@ import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.Keys;
 import ru.netology.data.DataHelper;
 
-import java.time.Duration;
-
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -32,9 +30,9 @@ public class LoginPage {
         return new VerificationPage();
     }
 
-    public void invalidLogin(DataHelper.AuthInfo info) {
-        loginField.setValue(info.getLogin());
-        passwordField.setValue(info.getPassword());
+    public void LoginWhithWrongPassword() {
+        loginField.setValue(DataHelper.getAuthInfo().getLogin());
+        passwordField.setValue(DataHelper.generateRandomPassword());
         loginButton.click();
         loginField.sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.DELETE);
         passwordField.sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.DELETE);

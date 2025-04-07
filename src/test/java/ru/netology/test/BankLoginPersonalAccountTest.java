@@ -59,9 +59,8 @@ public class BankLoginPersonalAccountTest {
     @Test
     @DisplayName("Должны получить уведомление о блокировке аккаунта пользователя после трёх попыток неверного ввода пароля")
     void shouldLockSystemAfterThreeAttemptsEnterInvalidPassword() {
-        var authInfo = DataHelper.generateRandomUser();
         for (int i = 0; i < 3; i++) {
-            loginPage.invalidLogin(authInfo);
+            loginPage.LoginWhithWrongPassword();
         }
         assertAll(() -> loginPage.verifyErrorNotificationVisiblity("Аккаунт заблокирован после трех неудачных попыток входа," +
                         "Вам следует обратитесь в офис Банка"),
