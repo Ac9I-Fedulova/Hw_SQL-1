@@ -6,7 +6,6 @@ import ru.netology.data.DataHelper;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class LoginPage {
     private final SelenideElement loginField = $("[data-test-id=login] input");
@@ -14,26 +13,27 @@ public class LoginPage {
     private final SelenideElement loginButton = $("[data-test-id=action-login]");
     private final SelenideElement errorNotification = $("[data-test-id='error-notification'] .notification__content");
 
-    public void verifyErrorNotificationVisiblity(String exactedText) {
+    public void verifyErrorNotificationVisibility(String exactedText) {
         errorNotification.shouldBe(visible).shouldHave(text(exactedText));
     }
 
     public void checkButtonUnavailability() {
-        boolean isEnabled = loginButton.isEnabled();
-        assertFalse(isEnabled);
+        loginButton.shouldBe(disabled);
+    }
+
+    private void enterLoginAndPassword(String login, String password) {
+        loginField.setValue(login);
+        passwordField.setValue(password);
+        loginButton.click();
     }
 
     public VerificationPage validLogin(DataHelper.AuthInfo info) {
-        loginField.setValue(info.getLogin());
-        passwordField.setValue(info.getPassword());
-        loginButton.click();
+        enterLoginAndPassword(info.getLogin(), info.getPassword());
         return new VerificationPage();
     }
 
-    public void LoginWhithWrongPassword() {
-        loginField.setValue(DataHelper.getAuthInfo().getLogin());
-        passwordField.setValue(DataHelper.generateRandomPassword());
-        loginButton.click();
+    public void loginWithWrongPassword(DataHelper.AuthInfo info) {
+        enterLoginAndPassword(info.getLogin(), DataHelper.generateRandomPassword());
         loginField.sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.DELETE);
         passwordField.sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.DELETE);
     }

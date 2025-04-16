@@ -43,7 +43,7 @@ public class BankLoginPersonalAccountTest {
     void shouldGetErrorNotificationIfLoginInvalidUser() {
         var authInfo = DataHelper.generateRandomUser();
         loginPage.validLogin(authInfo);
-        loginPage.verifyErrorNotificationVisiblity("Ошибка! Неверно указан логин или пароль");
+        loginPage.verifyErrorNotificationVisibility("Ошибка! Неверно указан логин или пароль");
     }
 
     @Test
@@ -60,9 +60,9 @@ public class BankLoginPersonalAccountTest {
     @DisplayName("Должны получить уведомление о блокировке аккаунта пользователя после трёх попыток неверного ввода пароля")
     void shouldLockSystemAfterThreeAttemptsEnterInvalidPassword() {
         for (int i = 0; i < 3; i++) {
-            loginPage.LoginWhithWrongPassword();
+            loginPage.loginWithWrongPassword(authInfo);
         }
-        assertAll(() -> loginPage.verifyErrorNotificationVisiblity("Аккаунт заблокирован после трех неудачных попыток входа," +
+        assertAll(() -> loginPage.verifyErrorNotificationVisibility("Аккаунт заблокирован после трех неудачных попыток входа," +
                         "Вам следует обратитесь в офис Банка"),
                 () -> loginPage.checkButtonUnavailability());
     }
